@@ -38,7 +38,7 @@ install_check_acme(){
 	else
 		wget --no-check-certificate -qO- https://github.com/acmesh-official/acme.sh/tarball/master | tar xz
 		cd acmesh-* || _error "Error: Download acme.sh failed, Please check it and try again"
-		./acme.sh --install --log --home /etc/httpd/acme.sh --certhome /home/${domain}_ssl
+		./acme.sh --install --log --home /etc/httpd/acme.sh --certhome /home/${domain}/ssl
 		cd .. && rm -rf acmesh-*
 		sed -i 's/cat "\$CERT_PATH"$/#cat "\$CERT_PATH"/g' /etc/httpd/acme.sh/acme.sh
 		cat > /etc/httpd/acme.sh/upgrade.sh<<EOF
@@ -55,7 +55,7 @@ EOF
 			_info "create cron job for automatic upgrade acme.sh success"
 		fi
 	fi
-	[ ! -d "/home/${domain}_ssl" ] && mkdir -p "/home/${domain}_ssl"
+	[ ! -d "/home/${domain}/ssl" ] && mkdir -p "/home/${domain}/ssl"
 }
 create_ssl_htaccess(){
     cat > ${website_root}/.htaccess << EOF
